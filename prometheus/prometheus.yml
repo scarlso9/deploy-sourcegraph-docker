@@ -44,4 +44,4 @@ scrape_configs:
 
     static_configs:
       - targets:
-        - lsif-server:9090
+        - precise-code-intel:9090

@@ -85,9 +85,9 @@ services:
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'REPLACER_URL=http://replacer:3185'
       # remove after 3.15
-      - 'LSIF_SERVER_URL=http://lsif-server:3186'
+      - 'LSIF_SERVER_URL=http://precise-code-intel:3186'
       # used after 3.15
-      - 'LSIF_API_SERVER_URL=http://lsif-server:3186'
+      - 'LSIF_API_SERVER_URL=http://precise-code-intel:3186'
       - 'GRAFANA_SERVER_URL=http://grafana:3370'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     healthcheck:
@@ -125,9 +125,9 @@ services:
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'REPLACER_URL=http://replacer:3185'
       # remove after 3.15
-      - 'LSIF_SERVER_URL=http://lsif-server:3186'
+      - 'LSIF_SERVER_URL=http://precise-code-intel:3186'
       # used after 3.15
-      - 'LSIF_API_SERVER_URL=http://lsif-server:3186'
+      - 'PCI_API_SERVER_URL=http://precise-code-intel:3186'
       - 'GRAFANA_SERVER_URL=http://grafana:3000'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
@@ -258,13 +258,15 @@ services:
   # Ports exposed to other Sourcegraph services: 3186/TCP (server) 9090/TCP (prometheus)
   # Ports exposed to the public internet: none
   #
-  lsif-server:
-    container_name: lsif-server
+  precise-code-intel:
+    container_name: precise-code-intel
     image: 'index.docker.io/sourcegraph/lsif-server:3.14.0-1@sha256:ed683d2579d807458a892eab2f88fa5618b82a1ae7af02d5e7de1af3f6eea4a7'
     cpus: 2
     mem_limit: '2g'
     environment:
       - GOMAXPROCS=2
+      - PCI_BUNDLE_MANAGER_URL=http://localhost:3187
+      - PCI_API_SERVER_URL=http://localhost:3186
       - LSIF_STORAGE_ROOT=/lsif-storage
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
     healthcheck:
