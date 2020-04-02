@@ -1,0 +1,62 @@
+version: 1
+task_definition:
+    services:
+      caddy:
+             cpu_shares: 4096
+             mem_limit: 4GB
+      sourcegraph-frontend-0:
+             cpu_shares: 4096
+             mem_limit: 8GB
+      sourcegraph-frontend-internal:
+             cpu_shares: 4096
+             mem_limit: 8GB
+      gitserver-0:
+             cpu_shares: 4096
+             mem_limit: 8GB
+      zoekt-indexserver-0:
+             mem_limit: 16GB
+      zoekt-webserver-0:
+             cpu_shares: 8192
+             mem_limit: 50GB
+      searcher-0:
+             cpu_shares: 2048
+             mem_limit: 2GB
+      github-proxy:
+             cpu_shares: 1024
+             mem_limit: 1GB
+      lsif-server:
+             cpu_shares: 2048
+             mem_limit: 2GB
+      query-runner:
+             cpu_shares: 1024
+             mem_limit: 1GB
+      replacer:
+             cpu_shares: 1024
+             mem_limit: 0.5GB
+      repo-updater:
+             cpu_shares: 4096
+             mem_limit: 4GB
+      syntect-server:
+             cpu_shares: 4096
+             mem_limit: 6GB
+      symbols-0:
+             cpu_shares: 2048
+             mem_limit: 4GB
+      prometheus:
+             cpu_shares: 4096
+             mem_limit: 8GB
+      grafana:
+             cpu_shares: 1024
+             mem_limit: 1GB
+      cadvisor:
+             cpu_shares: 1024
+             mem_limit: 1GB
+      pgsql:
+             cpu_shares: 4096
+             mem_limit: 2GB
+      redis-cache:
+             cpu_shares: 1024
+             mem_limit: 6GB
+      redis-store:
+             cpu_shares: 1024
+             mem_limit: 6GB

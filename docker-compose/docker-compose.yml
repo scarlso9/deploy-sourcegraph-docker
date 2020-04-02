@@ -1,4 +1,4 @@
-version: '2.4'
+version: '3'
 services:
   # Description: Acts as a reverse proxy for all of the sourcegraph-frontend instances
   #
@@ -18,8 +18,12 @@ services:
   caddy:
     container_name: caddy
     image: 'index.docker.io/caddy/caddy:alpine@sha256:ef2f47730caa12cb7d0ba944c048b8e48f029d5e0ff861840fa2b8f1868e1966'
-    cpus: 4
-    mem_limit: '4g'
+    
+      
+        
+          
+        
+          
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
@@ -39,7 +43,7 @@ services:
       # - '../caddy/builtins/https.lets-encrypt-staging.Caddyfile:/etc/caddy/Caddyfile'
       #
       # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
-      # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details. 
+      # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
       # - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
       #
       # Uncomment the following line when using HTTPS with custom certificates
@@ -70,8 +74,12 @@ services:
   sourcegraph-frontend-0:
     container_name: sourcegraph-frontend-0
     image: 'index.docker.io/sourcegraph/frontend:3.14.0@sha256:fd10d228461581e65fcc39e0fc4481be5a19f4b5aa1a1b19f0ad90fcc4a5ff88'
-    cpus: 4
-    mem_limit: '8g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=12
       - JAEGER_AGENT_HOST=jaeger-agent
@@ -95,7 +103,7 @@ services:
       interval: 5s
       timeout: 10s
       retries: 3
-      start_period: 300s
+      
     volumes:
       - 'sourcegraph-frontend-0:/mnt/cache'
     networks:
@@ -111,8 +119,12 @@ services:
   sourcegraph-frontend-internal:
     container_name: sourcegraph-frontend-internal
     image: 'index.docker.io/sourcegraph/frontend:3.14.0@sha256:fd10d228461581e65fcc39e0fc4481be5a19f4b5aa1a1b19f0ad90fcc4a5ff88'
-    cpus: 4
-    mem_limit: '8g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=4
       - PGHOST=pgsql
@@ -145,8 +157,12 @@ services:
   gitserver-0:
     container_name: gitserver-0
     image: 'index.docker.io/sourcegraph/gitserver:3.13.2@sha256:95ea2520763f51bf0888c70333e043a40a9a7a31f141fffc03ac19671513c324'
-    cpus: 4
-    mem_limit: '8g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=4
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -168,7 +184,10 @@ services:
   zoekt-indexserver-0:
     container_name: zoekt-indexserver-0
     image: 'index.docker.io/sourcegraph/zoekt-indexserver:0.0.20200318141948-0b140b7@sha256:b022fd7e4884a71786acae32e0ec8baf785c18350ebf5d574d52335a346364f9'
-    mem_limit: '16g'
+    
+      
+        
+          
     environment:
       - GOMAXPROCS=8
       - 'HOSTNAME=zoekt-webserver-0:6070'
@@ -188,8 +207,12 @@ services:
   zoekt-webserver-0:
     container_name: zoekt-webserver-0
     image: 'index.docker.io/sourcegraph/zoekt-webserver:0.0.20200318141342-0b140b7@sha256:0d0fbce55b51ec7bdd37927539f50459cd0f207b7cf219ca5122d07792012fb1'
-    cpus: 8
-    mem_limit: '50g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=8
       - 'HOSTNAME=zoekt-webserver-0:6070'
@@ -214,8 +237,12 @@ services:
   searcher-0:
     container_name: searcher-0
     image: 'index.docker.io/sourcegraph/searcher:3.14.0@sha256:904b0755d65bfaf467d7da36927798400204d603357ad32baa7a525863d54a78'
-    cpus: 2
-    mem_limit: '2g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=2
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -242,8 +269,12 @@ services:
   github-proxy:
     container_name: github-proxy
     image: 'index.docker.io/sourcegraph/github-proxy:3.14.0@sha256:5679eaafbfb5687900d5a379c8941d2650b6c9cfecf359b53921223b07e16e6c'
-    cpus: 1
-    mem_limit: '1g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=1
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -261,8 +292,12 @@ services:
   lsif-server:
     container_name: lsif-server
     image: 'index.docker.io/sourcegraph/lsif-server:3.14.0-1@sha256:ed683d2579d807458a892eab2f88fa5618b82a1ae7af02d5e7de1af3f6eea4a7'
-    cpus: 2
-    mem_limit: '2g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=2
       - LSIF_STORAGE_ROOT=/lsif-storage
@@ -272,7 +307,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 1
-      start_period: 60s
+      
     volumes:
       - 'lsif-server:/lsif-storage'
     networks:
@@ -290,8 +325,12 @@ services:
   query-runner:
     container_name: query-runner
     image: 'index.docker.io/sourcegraph/query-runner:3.14.0@sha256:1c1e2799d2679e278c16daff1a7160497fa8922fce16b9e27a7bf278455d4aba'
-    cpus: 1
-    mem_limit: '1g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=1
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -309,8 +348,12 @@ services:
   replacer:
     container_name: replacer
     image: 'index.docker.io/sourcegraph/replacer:3.14.0@sha256:8843d25125b8309623642fe22d9f4412e1c692ce3823b0bd2b5d924c4004808e'
-    cpus: 1
-    mem_limit: '512m'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=1
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -334,8 +377,12 @@ services:
   repo-updater:
     container_name: repo-updater
     image: 'index.docker.io/sourcegraph/repo-updater:3.14.0@sha256:8417839e12336e3e5dfc45ce5aae01a2e1527d8c721eeec87c78395c74f236cc'
-    cpus: 4
-    mem_limit: '4g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=1
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -356,14 +403,18 @@ services:
   syntect-server:
     container_name: syntect-server
     image: 'index.docker.io/sourcegraph/syntect_server:c0297a1@sha256:333abb45cfaae9c9d37e576c3853843b00eca33a40a7c71f6b93211ed96528df'
-    cpus: 4
-    mem_limit: '6g'
+    
+      
+        
+          
+        
+          
     healthcheck:
       test: "wget -q 'http://127.0.0.1:9238/health' -O /dev/null || exit 1"
       interval: 1s
       timeout: 5s
       retries: 1
-      start_period: 5s
+      
     networks:
       - sourcegraph
     restart: always
@@ -377,8 +428,12 @@ services:
   symbols-0:
     container_name: symbols-0
     image: 'index.docker.io/sourcegraph/symbols:3.14.0@sha256:7c21f0d3c711745bda36bb131cba5a47c53cb02fd2db08544718874d10212bdc'
-    cpus: 2
-    mem_limit: '4g'
+    
+      
+        
+          
+        
+          
     environment:
       - GOMAXPROCS=2
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -388,7 +443,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 1
-      start_period: 60s
+      
     volumes:
       - 'symbols-0:/mnt/cache'
     networks:
@@ -404,8 +459,12 @@ services:
   prometheus:
     container_name: prometheus
     image: 'index.docker.io/sourcegraph/prometheus:10.0.9@sha256:35a6d00e8291e365ef62a7a656fa674161582040116b9fa0612ce4baa1866bae'
-    cpus: 4
-    mem_limit: '8g'
+    
+      
+        
+          
+        
+          
     volumes:
       - 'prometheus-v2:/prometheus'
       - '../prometheus:/sg_prometheus_add_ons'
@@ -429,8 +488,12 @@ services:
   grafana:
     container_name: grafana
     image: 'index.docker.io/sourcegraph/grafana:10.0.11@sha256:0daf513a09d7f705d56ef8ec4c088723f2fb683d4e92a099606dfa6ba89ec756'
-    cpus: 1
-    mem_limit: '1g'
+    
+      
+        
+          
+        
+          
     volumes:
       - 'grafana:/var/lib/grafana'
       - '../grafana/datasources:/sg_config_grafana/provisioning/datasources'
@@ -450,8 +513,12 @@ services:
   cadvisor:
     container_name: cadvisor
     image: 'google/cadvisor:v0.33.0@sha256:47f1f8c02a3acfab77e74e2ec7acc0d475adc180ddff428503a4ce63f3d6061b'
-    cpus: 1
-    mem_limit: '1g'
+    
+      
+        
+          
+        
+          
     volumes:
       - '/:/rootfs:ro'
       - '/var/run:/var/run:ro'
@@ -472,8 +539,8 @@ services:
   # jaeger-agent:
   #   container_name: jaeger-agent
   #   image: 'index.docker.io/jaegertracing/jaeger-agent@sha256:7ad33c19fd66307f2a3c07c95eb07c335ddce1b487f6b6128faa75d042c496cb'
-  #   cpus: 1
-  #   mem_limit: '1g'
+  #   
+  #   mem_
   #   environment:
   #     - "COLLECTOR_HOST_PORT='jaeger-collector:14267'"
   #   networks:
@@ -489,8 +556,8 @@ services:
   # jaeger-cassandra:
   #   container_name: jaeger-cassandra
   #   image: 'index.docker.io/library/cassandra:3.11.4@sha256:9f1d47fd23261c49f226546fe0134e6d4ad0570b7ea3a169c521005cb8369a32'
-  #   cpus: 4
-  #   mem_limit: '8g'
+  #   
+  #   mem_
   #   environment:
   #     - 'HEAP_NEWSIZE=1G'
   #     - 'MAX_HEAP_SIZE=6G'
@@ -512,8 +579,8 @@ services:
   # jaeger-collector:
   #   container_name: jaeger-collector
   #   image: 'index.docker.io/jaegertracing/jaeger-collector:1.11@sha256:0b6d28bb52410f7b50c0f0fc16d7ee391e2e3eca47b713ac88d0891ca8a63cb9'
-  #   cpus: 1
-  #   mem_limit: '1g'
+  #   
+  #   mem_
   #   environment:
   #     - SPAN_STORAGE_TYPE=cassandra
   #     - CASSANDRA_SERVERS=jaeger-cassandra
@@ -531,8 +598,8 @@ services:
   # jaeger-query:
   #   container_name: jaeger-query
   #   image: 'index.docker.io/jaegertracing/jaeger-query:1.11@sha256:cddc521d0166c868931282685a863368ae2c14c4de0c1be38e388ece3080439e'
-  #   cpus: 1
-  #   mem_limit: '1g'
+  #   
+  #   mem_
   #   environment:
   #     - SPAN_STORAGE_TYPE=cassandra
   #     - CASSANDRA_SERVERS=jaeger-cassandra
@@ -553,14 +620,18 @@ services:
   pgsql:
     container_name: pgsql
     image: 'index.docker.io/sourcegraph/postgres-11.4:19-11-14_b084311b@sha256:072481559d559cfd9a53ad77c3688b5cf583117457fd452ae238a20405923297'
-    cpus: 4
-    mem_limit: '2g'
+    
+      
+        
+          
+        
+          
     healthcheck:
       test: '/liveness.sh'
       interval: 10s
       timeout: 1s
       retries: 3
-      start_period: 15s
+      
     volumes:
       - 'pgsql:/data/'
     networks:
@@ -576,8 +647,12 @@ services:
   redis-cache:
     container_name: redis-cache
     image: 'index.docker.io/sourcegraph/redis-cache:20-02-03_da9d71ca@sha256:7820219195ab3e8fdae5875cd690fed1b2a01fd1063bd94210c0e9d529c38e56'
-    cpus: 1
-    mem_limit: '6g'
+    
+      
+        
+          
+        
+          
     volumes:
       - 'redis-cache:/redis-data'
     networks:
@@ -592,8 +667,12 @@ services:
   redis-store:
     container_name: redis-store
     image: 'index.docker.io/sourcegraph/redis-store:20-01-30_c903717e@sha256:e8467a8279832207559bdfbc4a89b68916ecd5b44ab5cf7620c995461c005168'
-    cpus: 1
-    mem_limit: '6g'
+    
+      
+        
+          
+        
+          
     volumes:
       - 'redis-store:/redis-data'
     networks:
@@ -619,3 +698,4 @@ volumes:
   zoekt-0-shared:
 networks:
   sourcegraph:
+
